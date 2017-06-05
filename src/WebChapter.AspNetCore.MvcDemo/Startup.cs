@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WebChapter.AspNetCore.MvcDemo.Data;
+using WebChapter.AspNetCore.MvcDemo.Data.DAL;
 using WebChapter.AspNetCore.MvcDemo.Models;
 using WebChapter.AspNetCore.MvcDemo.Services;
 
@@ -50,6 +51,7 @@ namespace WebChapter.AspNetCore.MvcDemo
             services.AddMvc();
 
             // Add application services.
+            services.AddTransient<IInventory, Inventory>();
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
         }

@@ -1,4 +1,6 @@
-﻿namespace WebChapter.AspNetCore.MvcDemo.Models
+﻿using System.Collections.Generic;
+
+namespace WebChapter.AspNetCore.MvcDemo.Models
 {
     public class PaginatedViewModel<TViewModel> : IPaginatedViewModel<TViewModel>
     {
@@ -8,6 +10,6 @@
 
         public string PagerUrl { get; set; }
 
-        public IIndexableEnumerable<TViewModel> Models { get; set; }
+        public IEnumerable<TViewModel> Models { get; set; }
     }
 }

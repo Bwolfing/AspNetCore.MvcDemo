@@ -4,21 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Options;
+using Microsoft.Extensions.Options;
 using WebChapter.AspNetCore.MvcDemo.Data.DAL;
 using WebChapter.AspNetCore.MvcDemo.Models;
 using WebChapter.AspNetCore.MvcDemo.Models.InventoryViewModels;
+using WebChapter.AspNetCore.MvcDemo.Options;
 
 namespace WebChapter.AspNetCore.MvcDemo.Controllers
 {
     public class InventoryController : Controller
     {
-        private const int PageSize = 5;
-
+        private readonly int _pageSize;
         private readonly IInventory _inventory;
 
-        public InventoryController(IInventory inventory)
+        public InventoryController(IInventory inventory, IOptionsSnapshot<InventoryOptions> options)
         {
             _inventory = inventory;
+            _pageSize = options.Value.PageSize;
         }
 
         public IActionResult Index(int page = 1)
@@ -48,15 +51,13 @@ namespace WebChapter.AspNetCore.MvcDemo.Controllers
             var zeroIndexedPage = currentPage - 1;
 
             var allItems = _inventory.GetItems();
-            var itemsForPage = allItems.Skip(PageSize * zeroIndexedPage).Take(PageSize);
+            var itemsForPage = allItems.Skip(_pageSize * zeroIndexedPage).Take(_pageSize);
 
             return new PaginatedViewModel<ItemViewModel>
             {
                 CurrentPage = currentPage,
-                LastPage = (int)Math.Ceiling(allItems.Count() / (double)PageSize),
-                Models = new IndexableEnumerable<ItemViewModel>(
-                    itemsForPage.Select(i => new ItemViewModel(i))
-                ),
+                LastPage = (int)Math.Ceiling(allItems.Count() / (double)_pageSize),
+                Models = itemsForPage.Select(i => new ItemViewModel(i)),
                 PagerUrl = Url.Action(nameof(Index))
             };
         }

@@ -1,4 +1,4 @@
-@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @using WebChapter.AspNetCore.MvcDemo.Models
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -34,6 +34,7 @@
             <menulink class="blue item" asp-area="" controller-name="Home" action-name="Index" menu-text="Home"></menulink>
             <menulink class="blue item" asp-area="" controller-name="Home" action-name="About" menu-text="About"></menulink>
             <menulink class="blue item" asp-area="" controller-name="Home" action-name="Contact" menu-text="Contact">Contact</menulink>
+            <menulink class="blue item" asp-area="" controller-name="Inventory" action-name="Index" menu-text="Inventory"></menulink>
 
            @await Html.PartialAsync("_LoginPartial")
         </div>
@@ -44,6 +45,7 @@
         <menulink class="blue item" asp-area="" controller-name="Home" action-name="Index" menu-text="Home"></menulink>
         <menulink class="blue item" asp-area="" controller-name="Home" action-name="About" menu-text="About"></menulink>
         <menulink class="blue item" asp-area="" controller-name="Home" action-name="Contact" menu-text="Contact"></menulink>
+        <menulink class="blue item" asp-area="" controller-name="Inventory" action-name="Index" menu-text="Inventory"></menulink>
 
         @if (SignInManager.IsSignedIn(User))
         {

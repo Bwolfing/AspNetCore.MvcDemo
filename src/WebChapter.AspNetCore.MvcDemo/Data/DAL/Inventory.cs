@@ -3,26 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using WebChapter.AspNetCore.MvcDemo.Models;
+using WebChapter.AspNetCore.MvcDemo.Options;
 
 namespace WebChapter.AspNetCore.MvcDemo.Data.DAL
 {
     public class Inventory : IInventory
     {
-        private const int NumItems = 100;
-
         private readonly List<Item> _items = new List<Item>();
 
-        public Inventory()
+        public Inventory(IOptionsSnapshot<InventoryOptions> options)
         {
-            for (var i = 1; i <= NumItems; i++)
+            var random = new Random(DateTime.Now.Millisecond);
+            for (var i = 1; i <= options.Value.InventoryRepoSize; i++)
             {
                 _items.Add(new Item
                 {
                     Id = i,
                     Name = $"Product {i}",
                     Sku = i.ToString(),
-                    Supply = new Random(DateTime.Now.Millisecond).Next() % 50
+                    Supply = random.Next() % 50
                 });
             }
         }

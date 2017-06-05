@@ -9,9 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using WebChapter.AspNetCore.MvcDemo.Data;
 using WebChapter.AspNetCore.MvcDemo.Data.DAL;
 using WebChapter.AspNetCore.MvcDemo.Models;
+using WebChapter.AspNetCore.MvcDemo.Options;
 using WebChapter.AspNetCore.MvcDemo.Services;
 
 namespace WebChapter.AspNetCore.MvcDemo
@@ -49,11 +51,13 @@ namespace WebChapter.AspNetCore.MvcDemo
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+            services.AddRouting(opts => opts.LowercaseUrls = true);
 
             // Add application services.
             services.AddTransient<IInventory, Inventory>();
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.Configure<InventoryOptions>(Configuration.GetSection(nameof(InventoryOptions)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

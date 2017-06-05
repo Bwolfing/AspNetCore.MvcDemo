@@ -1,4 +1,4 @@
-﻿// Configure bundling and minification for the project.
+// Configure bundling and minification for the project.
 // More info at https://go.microsoft.com/fwlink/?LinkId=808241
 [
   {
@@ -18,7 +18,17 @@
       "enabled": true,
       "renameLocals": true
     },
-    // Optinally generate .map file
+    // Optionally generate .map file
     "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/semantic.validation.min.js",
+    "inputFiles": [
+      "wwwroot/js/semantic.validation.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
   }
 ]

@@ -1,16 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2C9AE331-F607-49D1-B69A-3128BE693E61}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E0232230-64A2-4F50-B3CC-DD19F7CB82B1}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebChapter.AspNetCore.MvcDemo", "src\WebChapter.AspNetCore.MvcDemo\WebChapter.AspNetCore.MvcDemo.xproj", "{7314EDCF-B168-4C06-90F6-F7C61980CB75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChapter.AspNetCore.MvcDemo", "src\WebChapter.AspNetCore.MvcDemo\WebChapter.AspNetCore.MvcDemo.csproj", "{7314EDCF-B168-4C06-90F6-F7C61980CB75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

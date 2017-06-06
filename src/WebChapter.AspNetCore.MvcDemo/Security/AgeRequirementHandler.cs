@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using NuGet.Protocol.Core.Types;
 using WebChapter.AspNetCore.MvcDemo.Models;
 
 namespace WebChapter.AspNetCore.MvcDemo.Security

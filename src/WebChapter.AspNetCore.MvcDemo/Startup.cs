@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,12 +21,36 @@ namespace WebChapter.AspNetCore.MvcDemo
 {
     public class Startup
     {
+        private enum OperatingSystem
+        {
+            OSX,
+            Linux,
+            Windows
+        }
+
+        private OperatingSystem CurrentOs
+        {
+            get
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    return OperatingSystem.Linux;
+                }
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    return OperatingSystem.OSX;
+                }
+                return OperatingSystem.Windows;
+            }
+        }
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                .AddJsonFile($"appsettings.{CurrentOs}.json", optional: false)
+                .AddJsonFile($"appsettings.{CurrentOs}.{env.EnvironmentName}.json", optional: true);
 
             if (env.IsDevelopment())
             {
@@ -44,7 +69,28 @@ namespace WebChapter.AspNetCore.MvcDemo
         {
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            {
+                var connectionString = Configuration.GetConnectionString("DefaultConnection");
+                var migrationsAssembly = Configuration.GetValue<string>("MigrationsAssembly");
+
+                switch (CurrentOs)
+                {
+                    case OperatingSystem.Linux:
+                    case OperatingSystem.OSX:
+                        options.UseSqlite(
+                            connectionString,
+                            opts => opts.MigrationsAssembly(migrationsAssembly)
+                        );
+                        break;
+                    case OperatingSystem.Windows:
+                        options.UseSqlServer(
+                            connectionString,
+                            opts => opts.MigrationsAssembly(migrationsAssembly)
+                        );
+                        break;
+                }
+                
+            });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

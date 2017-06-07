@@ -7,6 +7,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2C9AE331-F60
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebChapter.AspNetCore.MvcDemo", "src\WebChapter.AspNetCore.MvcDemo\WebChapter.AspNetCore.MvcDemo.csproj", "{7314EDCF-B168-4C06-90F6-F7C61980CB75}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChapter.AspNetCore.MvcDemo.Migrations.SqlServer", "src\WebChapter.AspNetCore.MvcDemo.Migrations.SqlServer\WebChapter.AspNetCore.MvcDemo.Migrations.SqlServer.csproj", "{DDB188AD-2D07-4528-9709-615659FE3A69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChapter.AspNetCore.MvcDemo.Data", "src\WebChapter.AspNetCore.MvcDemo.Data\WebChapter.AspNetCore.MvcDemo.Data.csproj", "{5F605534-3660-4AFD-997A-17AC3FB573A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChapter.AspNetCore.MvcDemo.Migrations.Sqlite", "src\WebChapter.AspNetCore.MvcDemo.Migrations.Sqlite\WebChapter.AspNetCore.MvcDemo.Migrations.Sqlite.csproj", "{C6494DE2-8D3A-4C8D-AD7D-6AAD1E705701}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,11 +23,26 @@ Global
 		{7314EDCF-B168-4C06-90F6-F7C61980CB75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7314EDCF-B168-4C06-90F6-F7C61980CB75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7314EDCF-B168-4C06-90F6-F7C61980CB75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDB188AD-2D07-4528-9709-615659FE3A69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDB188AD-2D07-4528-9709-615659FE3A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDB188AD-2D07-4528-9709-615659FE3A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDB188AD-2D07-4528-9709-615659FE3A69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F605534-3660-4AFD-997A-17AC3FB573A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F605534-3660-4AFD-997A-17AC3FB573A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F605534-3660-4AFD-997A-17AC3FB573A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F605534-3660-4AFD-997A-17AC3FB573A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6494DE2-8D3A-4C8D-AD7D-6AAD1E705701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6494DE2-8D3A-4C8D-AD7D-6AAD1E705701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6494DE2-8D3A-4C8D-AD7D-6AAD1E705701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6494DE2-8D3A-4C8D-AD7D-6AAD1E705701}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7314EDCF-B168-4C06-90F6-F7C61980CB75} = {2C9AE331-F607-49D1-B69A-3128BE693E61}
+		{DDB188AD-2D07-4528-9709-615659FE3A69} = {2C9AE331-F607-49D1-B69A-3128BE693E61}
+		{5F605534-3660-4AFD-997A-17AC3FB573A8} = {2C9AE331-F607-49D1-B69A-3128BE693E61}
+		{C6494DE2-8D3A-4C8D-AD7D-6AAD1E705701} = {2C9AE331-F607-49D1-B69A-3128BE693E61}
 	EndGlobalSection
 EndGlobal

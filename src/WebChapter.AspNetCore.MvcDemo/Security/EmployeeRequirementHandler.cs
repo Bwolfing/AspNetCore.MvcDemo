@@ -24,6 +24,7 @@ namespace WebChapter.AspNetCore.MvcDemo.Security
             }
 
             context.Succeed(requirement);
+            return Task.CompletedTask;
         }
     }
 }

@@ -13,4 +13,8 @@ $(function () {
     }
 
     $('.ui.checkbox').checkbox();
+    $(".ui.dropdown").dropdown();
+    $(".ui.menu .ui.dropdown").dropdown({
+        action: "nothing"
+    });
 });

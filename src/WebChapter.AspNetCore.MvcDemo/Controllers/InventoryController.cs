@@ -25,31 +25,51 @@ namespace WebChapter.AspNetCore.MvcDemo.Controllers
 
         public IActionResult Index(int page = 1)
         {
+            return PaginatedView(_inventory.GetItems, nameof(Index), page);
+        }
+
+        // Adult content is for adults, i.e. those 18+.
+        [Authorize(AuthorizationPolicies.Over18)]
+        [Route("[controller]/adult-content")]
+        public IActionResult AdultContent(int page = 1)
+        {
+            return PaginatedView(_inventory.GetAdultItems, nameof(AdultContent), page);
+        }
+
+        // We only want employees over 21 since alcohol is for 21+ individuals.
+        [Authorize(AuthorizationPolicies.Over21)]
+        public IActionResult Alcohol(int page = 1)
+        {
+            return PaginatedView(_inventory.GetAlcoholItems, nameof(Alcohol), page);
+        }
+
+        private IActionResult PaginatedView(Func<IQueryable<Item>> getItems, string viewName, int page)
+        {
             if (page <= 0)
             {
-                return RedirectToAction(nameof(Index), new {page = 1});
+                return RedirectToAction(viewName, new { page = 1 });
             }
 
-            var viewModel = GetPaginatedInventory(page);
+            var viewModel = GetPaginatedInventory(getItems, page);
 
             if (viewModel.LastPage == 0 && page != 1)
             {
-                return RedirectToAction(nameof(Index), new {page = 1});
+                return RedirectToAction(viewName, new { page = 1 });
             }
 
             if (viewModel.LastPage < page)
             {
-                return RedirectToAction(nameof(Index), new {page = viewModel.LastPage});
+                return RedirectToAction(viewName, new { page = viewModel.LastPage });
             }
 
-            return View(viewModel);
+            return View(viewName, viewModel);
         }
 
-        private IPaginatedViewModel<ItemViewModel> GetPaginatedInventory(int currentPage)
+        private IPaginatedViewModel<ItemViewModel> GetPaginatedInventory(Func<IQueryable<Item>> getItems, int currentPage)
         {
             var zeroIndexedPage = currentPage - 1;
 
-            var allItems = _inventory.GetItems();
+            var allItems = getItems();
             var itemsForPage = allItems.Skip(_pageSize * zeroIndexedPage).Take(_pageSize);
 
             return new PaginatedViewModel<ItemViewModel>

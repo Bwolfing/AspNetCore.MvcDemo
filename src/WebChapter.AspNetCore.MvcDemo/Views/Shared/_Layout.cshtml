@@ -34,7 +34,16 @@
             <menulink class="blue item" asp-area="" controller-name="Home" action-name="Index" menu-text="Home"></menulink>
             <menulink class="blue item" asp-area="" controller-name="Home" action-name="About" menu-text="About"></menulink>
             <menulink class="blue item" asp-area="" controller-name="Home" action-name="Contact" menu-text="Contact">Contact</menulink>
-            <menulink class="blue item" asp-area="" controller-name="Inventory" action-name="Index" menu-text="Inventory"></menulink>
+            <div class="ui pointing dropdown link item">
+                <span class="text">Inventory</span>
+                <span class="dropdown icon"></span>
+                <div class="menu">
+                    <menulink class="blue item" asp-area="" controller-name="Inventory" action-name="Index" menu-text="Home"></menulink>
+                    <menulink class="blue item" asp-area="" controller-name="Inventory" action-name="AdultContent" menu-text="Adult Content"></menulink>
+                    <menulink class="blue item" asp-area="" controller-name="Inventory" action-name="Alcohol" menu-text="Alcohol"></menulink>
+                </div>
+            </div>
+            
 
            @await Html.PartialAsync("_LoginPartial")
         </div>

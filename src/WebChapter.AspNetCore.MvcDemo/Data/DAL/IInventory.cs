@@ -7,6 +7,8 @@ namespace WebChapter.AspNetCore.MvcDemo.Data.DAL
     public interface IInventory
     {
         IQueryable<Item> GetItems();
+        IQueryable<Item> GetAdultItems();
+        IQueryable<Item> GetAlcoholItems();
         Task<Item> GetItemById(int id);
     }
 }

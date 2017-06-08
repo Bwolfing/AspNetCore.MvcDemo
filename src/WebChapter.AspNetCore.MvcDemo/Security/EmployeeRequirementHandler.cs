@@ -17,7 +17,7 @@ namespace WebChapter.AspNetCore.MvcDemo.Security
                 return Task.CompletedTask;
             }
 
-            if (context.User.Claims.FirstOrDefault(c => c.Value == "IsEmployee") == null)
+            if (context.User.Claims.FirstOrDefault(c => c.Type == "IsEmployee") == null)
             {
                 context.Fail();
                 return Task.CompletedTask;

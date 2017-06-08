@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -118,6 +119,12 @@ namespace WebChapter.AspNetCore.MvcDemo.Controllers
                     Email = model.Email,
                     Age = model.Age
                 };
+                user.Claims.Add(new IdentityUserClaim<string>
+                {
+                    UserId = user.Id,
+                    ClaimType = "IsEmployee",
+                    ClaimValue = "Yes",
+                });
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

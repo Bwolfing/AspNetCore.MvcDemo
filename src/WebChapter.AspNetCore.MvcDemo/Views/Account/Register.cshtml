@@ -26,6 +26,12 @@
                     <input asp-for="ConfirmPassword" type="password" placeholder="Confirm Password" />
                 </div>
             </div>
+            <div class="field">
+                <label asp-for="Age"></label>
+                <div class="ui left input">
+                    <input asp-for="Age" type="number" placeholder="Age" />
+                </div>
+            </div>
             <input type="submit" class="ui large blue submit button" value="Register" />
             <div asp-validation-summary="All" class="ui error message"></div>
         </div>

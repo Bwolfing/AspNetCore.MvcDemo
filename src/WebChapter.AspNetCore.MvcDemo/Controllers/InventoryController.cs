@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.Options;
+using System;
+using System.Linq;
 using WebChapter.AspNetCore.MvcDemo.Data.DAL;
 using WebChapter.AspNetCore.MvcDemo.Models;
 using WebChapter.AspNetCore.MvcDemo.Models.InventoryViewModels;
 using WebChapter.AspNetCore.MvcDemo.Options;
+using WebChapter.AspNetCore.MvcDemo.Security;
 
 namespace WebChapter.AspNetCore.MvcDemo.Controllers
 {
+    [Authorize(AuthorizationPolicies.EmployeeOnly)]
     public class InventoryController : Controller
     {
         private readonly int _pageSize;

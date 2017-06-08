@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -10,11 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using System.Runtime.InteropServices;
 using WebChapter.AspNetCore.MvcDemo.Data;
 using WebChapter.AspNetCore.MvcDemo.Data.DAL;
 using WebChapter.AspNetCore.MvcDemo.Models;
 using WebChapter.AspNetCore.MvcDemo.Options;
+using WebChapter.AspNetCore.MvcDemo.Security;
 using WebChapter.AspNetCore.MvcDemo.Services;
 
 namespace WebChapter.AspNetCore.MvcDemo
@@ -89,7 +86,6 @@ namespace WebChapter.AspNetCore.MvcDemo
                         );
                         break;
                 }
-                
             });
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -97,6 +93,15 @@ namespace WebChapter.AspNetCore.MvcDemo
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            services.AddAuthorization(opts =>
+            {
+                // We create policies here which are then used with the AuthorizeAttribute.
+                opts.AddPolicy(AuthorizationPolicies.Over21, policy => policy.AddRequirements(new AgeRequirement(21)));
+                opts.AddPolicy(AuthorizationPolicies.Over18, policy => policy.AddRequirements(new AgeRequirement(18)));
+                opts.AddPolicy(AuthorizationPolicies.EmployeeOnly, policy => policy.AddRequirements(new EmployeeRequirement()));
+            });
+
             services.AddRouting(opts => opts.LowercaseUrls = true);
 
             // Add application services.
@@ -104,6 +109,13 @@ namespace WebChapter.AspNetCore.MvcDemo
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.Configure<InventoryOptions>(Configuration.GetSection(nameof(InventoryOptions)));
+
+            // We want our AgeRequirementHandler as transient, since we want to refresh the injected
+            // user manager for fresh data between requests.
+            services.AddTransient<IAuthorizationHandler, AgeRequirementHandler>();
+            // We will make EmployeeRequirementHandler a singleton since this checks the claims
+            // of the currently logged in user without database access.
+            services.AddSingleton<IAuthorizationHandler, EmployeeRequirementHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -123,6 +135,7 @@ namespace WebChapter.AspNetCore.MvcDemo
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            // Sets up our ~/wwwroot directory as the root for all static files.
             app.UseStaticFiles();
 
             app.UseIdentity();
